@@ -21,6 +21,7 @@
     "build:win": "./node_modules/.bin/gulp.cmd",
     "dev": "./node_modules/.bin/webpack-dev-server --config example/webpack.config.js --devtool eval --progress --colors --hot --content-base example",
     "lint": "./node_modules/.bin/eslint src/ DateTime.js test/ && echo 'Linting OK! 💪'",
+    "eslint-bamboo": "eslint --cache --ext .js,.jsx -f node_modules/eslint-bamboo-formatter/reporter.js .",
     "notify-pre-commit-hook": "echo '### Starting pre-commit hook 🦄'",
     "test": "./node_modules/.bin/jest",
     "test:typings": "./node_modules/.bin/tsc -p ./typings",
@@ -76,6 +77,7 @@
     "through2": "^2.0.3",
     "typescript": "^2.0.10",
     "webpack": "^2.2.1",
+    "eslint-bamboo-formatter": "^0.1.1",
     "webpack-dev-server": "^1.7.0",
     "webpack-stream": "^3.2.0"
   },
