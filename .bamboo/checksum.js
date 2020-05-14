@@ -3,27 +3,28 @@ const crypto = require("crypto");
 const path = require("path");
 
 const rootPath = path.join(__dirname, "../");
-
 const oldJsonPath = path.join(rootPath, ".bamboo/old_package-lock.json");
 const jsonPath = path.join(rootPath, "package-lock.json");
 const varsPath = path.join(rootPath, ".bamboo/vars.txt");
+
 let data;
 
-if (fs.existsSync(oldJsonPath) === false) {
+if (
+  fs.existsSync(oldJsonPath) === false ||
+  fs.existsSync(path.join(rootPath, "node_modules"))
+) {
   fs.copyFileSync(jsonPath, oldJsonPath);
   data = new Uint8Array(Buffer.from("changed=true"));
-  fs.writeFileSync(varsPath, data);
 } else {
   const oldJson = require(oldJsonPath);
   const json = require(jsonPath);
-  if (JSON.stringify(oldJson) == JSON.stringify(json)) {
+  if (JSON.stringify(oldJson) === JSON.stringify(json)) {
     data = new Uint8Array(Buffer.from("changed=false"));
-    fs.writeFileSync(varsPath, data);
   } else {
     data = new Uint8Array(Buffer.from("changed=true"));
-    fs.writeFileSync(varsPath, data);
   }
 }
+fs.writeFileSync(varsPath, data);
 process.exit(0);
 
 // const checker = (fileName) => {
