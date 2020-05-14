@@ -11,7 +11,7 @@ let data;
 
 if (
   fs.existsSync(oldJsonPath) === false ||
-  fs.existsSync(path.join(rootPath, "node_modules"))
+  !fs.existsSync(path.join(rootPath, "node_modules"))
 ) {
   fs.copyFileSync(jsonPath, oldJsonPath);
   data = new Uint8Array(Buffer.from("changed=true"));
