@@ -8,7 +8,7 @@ const check = () => {
   const varsPath = path.join(rootPath, '.bamboo/vars.txt');
   let data = new Uint8Array(Buffer.from('needRebuild=true'));
 
-  if (fs.existsSync(oldJsonPath) || fs.existsSync(path.join(rootPath, 'node_modules'))) {
+  if (fs.existsSync(oldJsonPath) && fs.existsSync(path.join(rootPath, 'node_modules'))) {
     const oldJson = require(oldJsonPath);
     const json = require(jsonPath);
     if (JSON.stringify(oldJson) === JSON.stringify(json)) {
@@ -17,7 +17,7 @@ const check = () => {
       return;
     }
   }
-  fs.copyFileSync(jsonPath, oldJsonPath);
+  fs.copyFileSync(jsonPath, oldJsonPath, fs.constants.COPYFILE_FICLONE);
   fs.writeFileSync(varsPath, data);
 };
 
